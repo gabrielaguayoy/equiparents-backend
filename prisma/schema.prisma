@@ -1,0 +1,52 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Asegúrate de que la URL sea correcta
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Modelo de rol, define tipos de usuario en el sistema
+model Role {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique // El nombre debe ser único
+  description String? // Opcional, para describir el rol
+  users       User[] // Relación con los usuarios asociados
+}
+
+// Modelo de usuario
+model User {
+  id                Int              @id @default(autoincrement())
+  firstName         String // Nombre del usuario
+  lastName          String // Apellido del usuario
+  email             String           @unique // Debe ser único
+  password          String // Contraseña hash
+  phone             String? // Teléfono opcional
+  roleId            Int // Referencia al rol
+  role              Role             @relation(fields: [roleId], references: [id])
+  parentalAccountId Int? // ID de cuenta parental opcional
+  parentalAccount   ParentalAccount? @relation("UserAccount", fields: [parentalAccountId], references: [id], onDelete: Cascade) // Relación
+  children          Child[]          @relation("UserChildren") // Relación con los hijos asociados
+}
+
+// Modelo de cuenta parental
+model ParentalAccount {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique // El nombre debe ser único
+  createdAt DateTime @default(now()) // Asegura la fecha de creación
+  updatedAt DateTime @updatedAt // Actualiza la fecha cada vez que cambia
+  users     User[]   @relation("UserAccount") // Relación con los usuarios asociados
+  children  Child[]  @relation("AccountChildren") // Relación con los hijos asociados
+}
+
+// Modelo de niño
+model Child {
+  id                Int              @id @default(autoincrement())
+  name              String // Nombre del niño
+  dateOfBirth       DateTime // Fecha de nacimiento
+  parentalAccountId Int? // ID de cuenta parental opcional
+  parentalAccount   ParentalAccount? @relation("AccountChildren", fields: [parentalAccountId], references: [id], onDelete: SetNull) // Relación
+  userId            Int // ID del usuario relacionado
+  user              User             @relation("UserChildren", fields: [userId], references: [id], onDelete: Cascade) // Relación
+}

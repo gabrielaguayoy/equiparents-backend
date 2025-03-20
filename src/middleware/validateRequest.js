@@ -2,17 +2,28 @@
 
 import { validationResult } from "express-validator";
 
-// Middleware para validar datos antes de ejecutar el controlador
-const validateRequest = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      status: "error",
-      message: "Error en la validación de los datos.",
-      errors: errors.array(),
-    });
-  }
-  next();
-};
+/**
+ * 📌 Middleware de validación de solicitudes
+ * @param {Array} validations - Reglas de validación de `express-validator`
+ * @returns {Function} Middleware de validación
+ */
+export const validateRequest = (validations) => {
+  return async (req, res, next) => {
+    // Ejecuta las validaciones antes de procesar la solicitud
+    await Promise.all(validations.map((validation) => validation.run(req)));
 
-export default validateRequest;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        status: "error",
+        message: "Errores en la validación de datos",
+        errors: errors.array().map((err) => ({
+          field: err.param,
+          message: err.msg,
+        })),
+      });
+    }
+
+    next(); // ✅ Pasa al siguiente middleware si no hay errores
+  };
+};

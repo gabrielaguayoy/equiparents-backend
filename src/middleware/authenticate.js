@@ -1,26 +1,78 @@
 // src/middleware/authenticate.js
 
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-// Middleware para autenticar el token JWT
-export const authenticateToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]; // Obtén el token del encabezado
+dotenv.config();
 
-  if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Acceso no autorizado: no se proporcionó token." }); // Mensaje detallado si no hay token
+/**
+ * 📌 Genera un token JWT para autenticación
+ * @param {Object} payload - Datos del usuario (Ej: `{ userId: 1, role: 'admin' }`)
+ * @param {string} expiresIn - Duración del token (Ej: "7d" para 7 días)
+ * @returns {string} Token JWT generado
+ */
+export const generateToken = (payload, expiresIn = "7d") => {
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
+};
+
+/**
+ * 📌 Verifica un token JWT
+ * @param {string} token - Token a verificar
+ * @returns {Object | null} Retorna los datos decodificados o `null` si es inválido
+ */
+export const verifyToken = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    console.error("❌ Error al verificar token:", error);
+    return null;
   }
+};
+
+/**
+ * 📌 Middleware para autenticar al usuario mediante JWT
+ */
+export const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    console.warn("⚠️ Token no proporcionado o inválido.");
+    return res.status(403).json({
+      status: "error",
+      message: "Acceso no autorizado. Token requerido.",
+    });
+  }
+
+  const token = authHeader.split(" ")[1];
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      console.error("Token no válido:", err.message);
-      return res
-        .status(403)
-        .json({ message: "Acceso prohibido: token no válido." }); // Mensaje detallado si el token no es válido
+      console.error("❌ Token inválido o expirado:", err.message);
+      return res.status(403).json({
+        status: "error",
+        message: "Token inválido o expirado.",
+      });
     }
 
-    req.user = user; // Almacena los datos del usuario para este request
-    next(); // Continúa al siguiente middleware o ruta
+    console.log("✅ Token verificado. Usuario autenticado:", user);
+    req.user = {
+      userId: user.userId,
+      email: user.email,
+      roleName: user.role,
+    };
+
+    next();
   });
+};
+
+/**
+ * 📌 Middleware para verificar si el usuario es administrador
+ */
+export const requireAdmin = (req, res, next) => {
+  if (!req.user || req.user.role !== "admin") {
+    return res.status(403).json({
+      status: "error",
+      message: "Acceso denegado. Se requieren privilegios de administrador.",
+    });
+  }
+  next();
 };

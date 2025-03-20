@@ -66,13 +66,54 @@ Usa Thunder Client en VS Code o Postman para probar las rutas de la API.
 
 equiparents-backend/
 │── src/
-│ ├── api/ # Rutas de la API
-│ ├── controllers/ # Controladores de lógica de negocio
-│ ├── middleware/ # Middleware de autenticación, validación, etc.
-│ ├── lib/ # Configuración de Prisma
-│ ├── server.js # Servidor Express
-│── prisma/
-│ ├── schema.prisma # Esquema de base de datos
-│── .env # Variables de entorno
-│── package.json
-│── README.md
+│ ├── api/ # 📌 Módulos de la API organizados por dominio
+│ │ ├── users/ # 📌 Gestión de usuarios
+│ │ │ ├── userRoutes.js # 📌 Rutas de usuarios
+│ │ │ ├── userController.js # 📌 Controlador de usuarios
+│ │ │ ├── userService.js # 📌 Lógica de negocio para usuarios
+│ │ ├── auth/ # 📌 Autenticación
+│ │ │ ├── authRoutes.js # 📌 Rutas de autenticación
+│ │ │ ├── authController.js # 📌 Controlador de autenticación
+│ │ │ ├── authService.js # 📌 Lógica de autenticación
+│ │ ├── parentalAccounts/ # 📌 Gestión de cuentas parentales
+│ │ │ ├── parentalRoutes.js # 📌 Rutas de cuentas parentales
+│ │ │ ├── parentalController.js # 📌 Controlador de cuentas parentales
+│ │ │ ├── parentalService.js # 📌 Lógica de cuentas parentales
+│ │ │ ├── inviteRoutes.js # 📌 Rutas de invitaciones de padres
+│ │ │ ├── inviteController.js # 📌 Controlador de invitaciones
+│ │ │ ├── inviteService.js # 📌 Lógica de invitaciones
+│ │ ├── children/ # 📌 Gestión de hijos
+│ │ │ ├── childRoutes.js # 📌 Rutas de hijos
+│ │ │ ├── childController.js # 📌 Controlador de hijos
+│ │ │ ├── childService.js # 📌 Lógica de hijos
+│ │ ├── roles/ # 📌 Gestión de roles
+│ │ │ ├── roleRoutes.js # 📌 Rutas de roles
+│ │ │ ├── roleController.js # 📌 Controlador de roles
+│ │ │ ├── roleService.js # 📌 Lógica de roles
+│ │ ├── notifications/ # 📌 Notificaciones
+│ │ │ ├── notificationRoutes.js # 📌 Rutas de notificaciones
+│ │ │ ├── notificationController.js # 📌 Controlador de notificaciones
+│ │ │ ├── notificationService.js # 📌 Lógica de notificaciones
+│ │ ├── payments/ # 📌 Pagos e integración con Webpay
+│ │ │ ├── paymentRoutes.js # 📌 Rutas de pagos
+│ │ │ ├── paymentController.js # 📌 Controlador de pagos
+│ │ │ ├── paymentService.js # 📌 Lógica de pagos
+│ ├── middleware/ # 📌 Middlewares
+│ │ ├── authenticate.js # 📌 Middleware de autenticación JWT
+│ │ ├── validateRequest.js # 📌 Middleware para validaciones de datos
+│ ├── config/ # 📌 Configuración del backend
+│ │ ├── database.js # 📌 Configuración de Prisma y conexión a PostgreSQL
+│ │ ├── envConfig.js # 📌 Carga de variables de entorno
+│ ├── utils/ # 📌 Utilidades globales
+│ │ ├── errorHandler.js # 📌 Manejo global de errores
+│ │ ├── emailService.js # 📌 Servicio de envío de correos (SendGrid)
+│ │ ├── authUtils.js # 📌 Funciones auxiliares de autenticación
+│ ├── server.js # 📌 Configuración principal del servidor Express
+│── prisma/ # 📌 Configuración y migraciones de la base de datos
+│ ├── migrations/ # 📌 Carpeta de migraciones de Prisma
+│ ├── schema.prisma # 📌 Esquema de la base de datos en Prisma
+│ ├── seeds.js # 📌 Script para poblar datos iniciales (roles, admin, etc.)
+│── .env # 📌 Variables de entorno (🔒 No debe subirse al repo)
+│── .gitignore # 📌 Archivos y carpetas a ignorar en Git
+│── package.json # 📌 Configuración de dependencias de Node.js
+│── README.md # 📌 Documentación del backend

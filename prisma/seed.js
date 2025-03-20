@@ -1,30 +1,25 @@
 // prisma/seed.js
 
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../src/config/database.js"; // Asegúrate de importar Prisma desde la configuración
 
-const prisma = new PrismaClient();
+const seedRoles = async () => {
+  try {
+    const roles = ["admin", "parent"];
 
-async function main() {
-  const roles = [
-    { name: "admin", description: "Administrador del sistema" },
-    { name: "parent", description: "Usuario que tiene hijos" },
-  ];
+    for (const role of roles) {
+      await prisma.role.upsert({
+        where: { name: role },
+        update: {}, // Si ya existe, no se actualiza
+        create: { name: role }, // Si no existe, se crea
+      });
+    }
 
-  const rolePromises = roles.map((role) =>
-    prisma.role.create({
-      data: role,
-    })
-  );
+    console.log("✅ Roles cargados correctamente.");
+  } catch (error) {
+    console.error("❌ Error al cargar roles:", error);
+  } finally {
+    await prisma.$disconnect(); // 🔌 Cerrar conexión con la BD
+  }
+};
 
-  await Promise.all(rolePromises);
-  console.log("Roles seeded");
-}
-
-main()
-  .catch((e) => {
-    console.error("Error seeding roles:", e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+seedRoles();

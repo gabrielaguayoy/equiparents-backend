@@ -8,7 +8,7 @@ import {
   deleteParentalAccount,
   inviteParent,
 } from "./parentalController.js";
-import { authenticateToken } from "../../middleware/authenticate.js";
+import { authenticateToken } from "../middleware/authenticate.js";
 
 const router = express.Router();
 

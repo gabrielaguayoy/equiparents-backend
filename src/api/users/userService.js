@@ -1,5 +1,5 @@
 // src/api/users/userService.js
-import { prisma } from "../../config/database.js";
+import { prisma } from "../config/database.js";
 import bcrypt from "bcryptjs";
 import { generateUniqueAccountName } from "../parentalAccounts/parentalService.js"; // ✅ Importación correcta
 

@@ -9,7 +9,7 @@ import {
   deleteUser,
 } from "./userController.js";
 import { login } from "../auth/authController.js";
-import { authenticateToken } from "../../middleware/authenticate.js";
+import { authenticateToken } from "../middleware/authenticate.js";
 
 const router = express.Router();
 

@@ -2,8 +2,8 @@
 import bcrypt from "bcryptjs";
 import asyncHandler from "express-async-handler";
 import { validateExistingUser, getRoleByName } from "./userService.js";
-import { prisma } from "../../config/database.js";
-import { handleServerError } from "../../utils/errorHandler.js";
+import { prisma } from "../config/database.js";
+import { handleServerError } from "../utils/errorHandler.js";
 
 /**
  * 📌 Obtener la información del usuario autenticado

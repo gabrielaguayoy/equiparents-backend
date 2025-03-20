@@ -2,7 +2,7 @@
 
 import express from "express";
 import { sendInvitation, acceptInvitation } from "./inviteController.js";
-import { authenticateToken } from "../../middleware/authenticate.js";
+import { authenticateToken } from "../middleware/authenticate.js";
 
 const router = express.Router();
 

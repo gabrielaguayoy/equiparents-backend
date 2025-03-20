@@ -8,10 +8,7 @@ import {
   updateRole,
   deleteRole,
 } from "./roleController.js";
-import {
-  authenticateToken,
-  requireAdmin,
-} from "../../middleware/authenticate.js";
+import { authenticateToken, requireAdmin } from "../middleware/authenticate.js";
 
 const router = express.Router();
 

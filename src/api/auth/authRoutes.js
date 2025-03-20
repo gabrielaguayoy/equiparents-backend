@@ -2,7 +2,7 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
 import { login, logout, refreshToken } from "./authController.js";
-import { authenticateToken } from "../../middleware/authenticate.js";
+import { authenticateToken } from "../middleware/authenticate.js";
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 // src/api/parentalAccounts/parentalController.js
-import { prisma } from "../../config/database.js";
+import { prisma } from "../config/database.js";
 import asyncHandler from "express-async-handler";
 import {
   generateUniqueAccountName,

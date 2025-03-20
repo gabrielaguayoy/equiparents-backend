@@ -1,6 +1,6 @@
 // src/api/children/childService.js
 
-import { prisma } from "../../config/database.js";
+import { prisma } from "../config/database.js";
 
 /**
  * 📌 Obtener todos los hijos de una cuenta parental

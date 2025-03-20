@@ -1,6 +1,6 @@
 // src/api/roles/roleService.js
 
-import { prisma } from "../../config/database.js";
+import { prisma } from "../config/database.js";
 
 /**
  * 📌 Obtener todos los roles

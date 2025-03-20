@@ -1,4 +1,4 @@
-// src/config/database.js
+// src/api/config/database.js
 
 import { PrismaClient } from "@prisma/client";
 

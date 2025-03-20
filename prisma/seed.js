@@ -1,6 +1,6 @@
 // prisma/seed.js
 
-import { prisma } from "../src/config/database.js"; // Asegúrate de importar Prisma desde la configuración
+import { prisma } from "../src/api/config/database.js";
 
 const seedRoles = async () => {
   try {

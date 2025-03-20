@@ -7,8 +7,8 @@ import morgan from "morgan";
 import compression from "compression";
 import * as Sentry from "@sentry/node";
 import dotenv from "dotenv";
-import errorHandler from "./utils/errorHandler.js";
-import { connectDB, prisma } from "./config/database.js";
+import errorHandler from "./api/utils/errorHandler.js";
+import { connectDB, prisma } from "./api/config/database.js";
 
 // 📌 Cargar variables de entorno antes de cualquier otra configuración
 dotenv.config();

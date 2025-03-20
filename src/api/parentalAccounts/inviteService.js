@@ -1,6 +1,6 @@
 // src/api/parentalAccounts/inviteService.js
 
-import { prisma } from "../../config/database.js";
+import { prisma } from "../config/database.js";
 import crypto from "crypto";
 
 /**

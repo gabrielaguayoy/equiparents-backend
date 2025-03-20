@@ -1,3 +1,5 @@
+// src/api/utils/errorHandler.js
+
 import { prisma } from "../config/database.js";
 
 /**

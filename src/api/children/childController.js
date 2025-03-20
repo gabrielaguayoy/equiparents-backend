@@ -8,7 +8,7 @@ import {
   removeChild,
 } from "./childService.js";
 import asyncHandler from "express-async-handler";
-import { prisma } from "../../config/database.js"; //
+import { prisma } from "../config/database.js"; //
 
 /**
  * 📌 Obtener todos los hijos asociados a la cuenta parental del usuario autenticado

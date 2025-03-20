@@ -1,4 +1,4 @@
-// src/middleware/authenticate.js
+// src/api/middleware/authenticate.js
 
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
